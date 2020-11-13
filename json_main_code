@@ -31,3 +31,13 @@
   </script>
 </body>
 </html>
+
+
+
+
+-> after the first query write the second query in the function (response); line 26 
+
+ function (response) { (imput/variable for second query)  = JSON.stringify(response, undefined, 2); } 
+
+-> in line 10 make new const wbk for each database (e.g.: wikidata, wikipathways, bio2rdf) 
+-> alsp change line 11, 12 corresponding to the database links
