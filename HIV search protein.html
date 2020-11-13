@@ -1,0 +1,6 @@
+SELECT DISTINCT ?proteinurl (str(?label) as ?Protein)
+WHERE {
+?proteinurl a wp:Protein ; 
+  rdfs:label ?label ;
+  dcterms:isPartOf <http://identifiers.org/wikipathways/WP2684_r113130> .
+}
