@@ -1,4 +1,4 @@
-SELECT ?drug ?drugLabel ?DRUGBANKID ?KEGGID ?hasrole ?hasroleLabel ?BIOURL
+SELECT DISTINCT ?drug ?drugLabel ?DRUGBANKID (SAMPLE(?KEGGID) AS ?KEGG) ?hasrole ?hasroleLabel ?BIOURL
 
 WHERE {
 
@@ -11,4 +11,4 @@ WHERE {
   SERVICE wikibase:label {
     bd:serviceParam wikibase:language "en" .  
   }
-}
+} group by ?drug ?drugLabel ?DRUGBANKID ?hasrole ?hasroleLabel ?BIOURL
