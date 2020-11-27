@@ -1,0 +1,14 @@
+SELECT ?drug ?drugLabel ?DRUGBANKID ?KEGGID ?hasrole ?hasroleLabel ?BIOURL
+
+WHERE {
+
+  ?drug wdt:P2175 wd:Q18556697 .
+  ?drug wdt:P2868 ?hasrole .
+  ?drug wdt:P715 ?DRUGBANKID.
+  ?drug wdt:P665 ?KEGGID .
+  bind (concat("http://bio2rdf.org/drugbank:DB",?DRUGBANKID) as ?BIOURL).
+   
+  SERVICE wikibase:label {
+    bd:serviceParam wikibase:language "en" .  
+  }
+}
