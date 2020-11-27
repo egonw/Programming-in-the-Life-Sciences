@@ -1,0 +1,9 @@
+PREFIX dbvoc: <http://bio2rdf.org/drugbank_vocabulary:>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+select ?target ?function where {
+
+<http://bio2rdf.org/drugbank:DB00900> dbvoc:target ?target. 
+?target dbvoc:go-function ?function
+
+} LIMIT 100
