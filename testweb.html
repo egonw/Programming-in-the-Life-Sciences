@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<link rel= "stylesheet" href="testweb.css">
+
+</head>
+<body>
+	<nav>
+	
+	<ul>
+	
+	<li><a href="#section1">Home</a></li>
+	<li><a href="#section2">Radial Tree</a></li>
+	<li><a href="#section3">Sparql Query</a></li>
+	
+	
+	</ul>
+	
+	
+	</nav>
+<body>
+<div id="section1">
+<h1> Programming in the Life Sciences Project</h1>
+
+<p>Insert Bio background here</p>
+
+<pre id="output"></pre>
+  <script>
+    query = "SELECT ?compound ?cas WHERE { ?compound wdt:P231 ?cas } LIMIT 5000"
+    fetch(
+      wdk.sparqlQuery(query)
+    ).then( response => response.json()
+    ).then( wdk.simplify.sparqlResults
+    ).then(
+      function (response) {
+        document.getElementById('output').innerHTML =
+          JSON.stringify(response, undefined, 2);
+      }
+    )
+  </script>
+
+</p>
+</div>
+<div id="section2">
+<h1> This is section 1</h1>
+
+<pre id="output"></pre>
+  <script>
+    query = "SELECT ?compound ?cas WHERE { ?compound wdt:P231 ?cas } LIMIT 5000"
+    fetch(
+      wdk.sparqlQuery(query)
+    ).then( response => response.json()
+    ).then( wdk.simplify.sparqlResults
+    ).then(
+      function (response) {
+        document.getElementById('output').innerHTML =
+          JSON.stringify(response, undefined, 2);
+      }
+    )
+  </script>
+</div>
+<div id="section3">
+<h1> This is section 2</h1>
+</div>
+
+</body>
+</html>
