@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<b><p> HIV->DRUG->TARGET->Function </p></b>
+<!-- For the Sparql Queries -->
+<!-- Import D3 visulaization library -->
+	<script src="https://d3js.org/d3.v4.min.js">
+	</script>
+<!-- Initialize a global WBK function -->
+	<script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikibase-sdk.min.js">
+	</script>
+<!-- Initialize a global wdk object for wikidata using the WBK object -->
+	<script src="https://cdn.rawgit.com/maxlath/wikidata-sdk/dist/dist/wikidata-sdk.min.js">
+	</script>
+	<script>
+		const wbk = new WBK({
+		    instance: 'https://query.wikidata.org/',
+		    sparqlEndpoint: 'https://query.wikidata.org/sparql'
+		});
+	</script>
+<!-- Initialize a global wdk object for bio2rdf using the WBK object -->
+	<script>
+		const wk = new WBK({
+		    instance: 'https://bio2rdf.org/sparql',
+		    sparqlEndpoint: 'https://bio2rdf.org/sparql'
+		});
+	</script>
+<!-- For the Radial tree -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://d3js.org/d3.v4.min.js">
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.3.10/d3.min.js">
+	</script>
+	<link rel="stylesheet" href="Visual.css">
+</head>
+<body>
+<!-- Queries run here -->
+<script>
+	query =
+	`SELECT DISTINCT ?drugLabel ?dbID  
+	 
+	WHERE {
+	 
+	    ?drug wdt:P2175 wd:Q18556697 .
+	    ?drug wdt:P715 ?dbID
+	  
+	    SERVICE wikibase:label {bd:serviceParam wikibase:language \"en\" .  }
+	   
+	}`;
+	
+	fetch(
+	    wbk.sparqlQuery(query)
+	).then(Response => Response.json()
+	).then(wdk.simplify.sparqlResults
+	).then(
+	    function (Response) {
+	
+	      
+	           
+	
+	       // for (i = 0; i < 24; i++) {
+	
+	            query =
+	                `PREFIX dbvoc: <http://bio2rdf.org/drugbank_vocabulary:> 
+	            PREFIX dcterms: <http://purl.org/dc/terms/> 
+	
+	            select ?title ?targetName ?function
+	
+	            where {
+	
+	                <http://bio2rdf.org/drugbank:DB00041> dcterms:title ?title. 
+	                <http://bio2rdf.org/drugbank:DB00041>dbvoc:target ?target . 
+	                ?target dcterms:title ?targetName . 
+	                ?target dbvoc:go-function ?function .
+	
+	            }`;
+	
+	
+	            fetch(
+	                wk.sparqlQuery(query)
+	            ).then(SecResponse => SecResponse.json()
+	            ).then(wdk.simplify.sparqlResults
+	            ).then(
+	                function (SecResponse) {
+	                      <!-- Radial tree is made here -->
+	
+	  
+	
+	var pubs =
+	{
+	    "name": "HIV",
+	    "children": [
+	        {
+	            "name": "tenofovir"
+	        },
+	        {
+	            "name": "zidovudine",
+	            "children": [
+	                {
+	                    "name": "Telomerase reverse transcriptase",
+	                    "children": [
+	                        {
+	                            "name": "RNA binding"
+	                        },
+	                        {
+	                            "name": "DNA binding"
+	                        },
+	                        {
+	                            "name": "binding"
+	                        },
+	                        {
+	                            "name": "telomerase activity"
+	                        },
+	                        {
+	                            "name": "telomerase activity"
+	                        },
+	                        {
+	                            "name": "transferase activity, transferring phosphorus-containing groups"
+	                        },
+	                        {
+	                            "name": "nucleic acid binding"
+	                        },
+	                        {
+	                            "name": "nucleotidyltransferase activity"
+	                        },
+	                        {
+	                            "name": "RNA-directed DNA polymerase activity"
+	                        },
+	                        {
+	                            "name": "telomeric template RNA reverse transcriptase activity"
+	                        }
+	                    ]
+	                },
+	                {
+	                    "name": "Reverse Transcriptase",
+	                    "children": [
+	                        {
+	                            "name": "RNA binding"
+	                        },
+	                        {
+	                            "name": "binding"
+	                        },
+	                        {
+	                            "name": "catalytic activity"
+	                        },
+	                        {
+	                            "name": "hydrolase activity"
+	                        },
+	                        {
+	                            "name": "hydrolase activity, acting on ester bonds"
+	                        },
+	                        {
+	                            "name": "transferase activity"
+	                        },
+	                        {
+	                            "name": "transferase activity, transferring phosphorus-containing groups"
+	                        },
+	                        {
+	                            "name": "endonuclease activity"
+	                        },
+	                        {
+	                            "name": "endoribonuclease activity"
+	                        },
+	                        {
+	                            "name": "nuclease activity"
+	                        },
+	                        {
+	                            "name": "nucleic acid binding"
+	                        },
+	                        {
+	                            "name": "nucleotidyltransferase activity"
+	                        },
+	                        {
+	                            "name": "endoribonuclease activity, producing 5'-phosphomonoesters"
+	                        },
+	                        {
+	                            "name": "RNA-directed DNA polymerase activity"
+	                        },
+	                        {
+	                            "name": "ribonuclease H activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Amprenavir",
+	            "children": [
+	                {
+	                    "name": "Protease",
+	                    "children": [
+	                        {
+	                            "name": "Involved in aspartic-type endopeptidase activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Nevirapine",
+	            "children": [
+	                {
+	                    "name": "Reverse Transcriptase",
+	                    "children": [
+	                        {
+	                            "name": "RNA binding"
+	                        },
+	                        {
+	                            "name": "binding"
+	                        },
+	                        {
+	                            "name": "catalytic activity"
+	                        },
+	                        {
+	                            "name": "hydrolase activity"
+	                        },
+	                        {
+	                            "name": "hydrolase activity, acting on ester bonds"
+	                        },
+	                        {
+	                            "name": "transferase activity"
+	                        },
+	                        {
+	                            "name": "transferase activity, transferring phosphorus-containing groups"
+	                        },
+	                        {
+	                            "name": "endonuclease activity"
+	                        },
+	                        {
+	                            "name": "endoribonuclease activity"
+	                        },
+	                        {
+	                            "name": "nuclease activity"
+	                        },
+	                        {
+	                            "name": "nucleic acid binding"
+	                        },
+	                        {
+	                            "name": "nucleotidyltransferase activity"
+	                        },
+	                        {
+	                            "name": "endoribonuclease activity, producing 5'-phosphomonoesters"
+	                        },
+	                        {
+	                            "name": "RNA-directed DNA polymerase activity"
+	                        },
+	                        {
+	                            "name": "ribonuclease H activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Abacavir",
+	            "children": [
+	                {
+	                    "name": "Reverse Transcriptase",
+	                    "children": [
+	                        {
+	                            "name": "RNA binding"
+	                        },
+	                        {
+	                            "name": "binding"
+	                        },
+	                        {
+	                            "name": "catalytic activity"
+	                        },
+	                        {
+	                            "name": "hydrolase activity"
+	                        },
+	                        {
+	                            "name": "hydrolase activity, acting on ester bonds"
+	                        },
+	                        {
+	                            "name": "transferase activity"
+	                        },
+	                        {
+	                            "name": "transferase activity, transferring phosphorus-containing groups"
+	                        },
+	                        {
+	                            "name": "endonuclease activity"
+	                        },
+	                        {
+	                            "name": "endoribonuclease activity"
+	                        },
+	                        {
+	                            "name": "nuclease activity"
+	                        },
+	                        {
+	                            "name": "nucleic acid binding"
+	                        },
+	                        {
+	                            "name": "nucleotidyltransferase activity"
+	                        },
+	                        {
+	                            "name": "endoribonuclease activity, producing 5'-phosphomonoesters"
+	                        },
+	                        {
+	                            "name": "RNA-directed DNA polymerase activity"
+	                        },
+	                        {
+	                            "name": "ribonuclease H activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Lopinavir",
+	            "children": [
+	                {
+	                    "name": "Protease",
+	                    "children": [
+	                        {
+	                            "name": "Involved in aspartic-type endopeptidase activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Maraviroc",
+	            "children": [
+	                {
+	                    "name": "C-C chemokine receptor type 5",
+	                    "children": [
+	                        {
+	                            "name": "G-protein coupled receptor activity"
+	                        },
+	                        {
+	                            "name": "peptide receptor activity, G-protein coupled"
+	                        },
+	                        {
+	                            "name": "receptor activity"
+	                        },
+	                        {
+	                            "name": "rhodopsin-like receptor activity"
+	                        },
+	                        {
+	                            "name": "signal transducer activity"
+	                        },
+	                        {
+	                            "name": "transmembrane receptor activity"
+	                        },
+	                        {
+	                            "name": "G-protein chemoattractant receptor activity"
+	                        },
+	                        {
+	                            "name": "chemokine receptor activity"
+	                        },
+	                        {
+	                            "name": "C-C chemokine receptor activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Enfuvirtide",
+	            "children": [
+	                {
+	                    "name": "Envelope glycoprotein",
+	                    "children": [
+	                        {
+	                            "name": "structural molecule activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Nelfinavir",
+	            "children": [
+	                {
+	                    "name": "HIV-1 protease",
+	                    "children": [
+	                        {
+	                            "name": "aspartic-type endopeptidase activity"
+	                        },
+	                        {
+	                            "name": "catalytic activity"
+	                        },
+	                        {
+	                            "name": "endopeptidase activity"
+	                        },
+	                        {
+	                            "name": "hydrolase activity"
+	                        },
+	                        {
+	                            "name": "peptidase activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Aldesleukin",
+	            "children": [
+	                {
+	                    "name": "Interleukin-2 receptor subunit beta",
+	                    "children": [
+	                        {
+	                            "name": "receptor activity"
+	                        },
+	                        {
+	                            "name": "signal transducer activity"
+	                        },
+	                        {
+	                            "name": "transmembrane receptor activity"
+	                        },
+	                        {
+	                            "name": "hematopoietin/interferon-class (D200-domain) cytokine receptor activity"
+	                        }
+	                    ]
+	                },
+	                {
+	                    "name": "Cytokine receptor common subunit gamma",
+	                    "children": [
+	                        {
+	                            "name": "receptor activity"
+	                        },
+	                        {
+	                            "name": "signal transducer activity"
+	                        },
+	                        {
+	                            "name": "transmembrane receptor activity"
+	                        },
+	                        {
+	                            "name": "hematopoietin/interferon-class (D200-domain) cytokine receptor activity"
+	                        }
+	                    ]
+	                }
+	            ]
+	        },
+	        {
+	            "name": "Raltegravir",
+	            "children": [
+	                {
+	                    "name": "Integrase",
+	                    "children": [
+	                        {
+	                            "name": "Involved in DNA integration"
+	                        }
+	                    ]
+	                }
+	            ]
+	        }
+	    ]
+	};
+	
+	var diameter = 1000;
+	
+	var margin = { top: 20, right: 120, bottom: 20, left: 120 },
+	    width = diameter,
+	    height = diameter;
+	
+	var i = 0,
+	    duration = 800,
+	    root;
+	
+	var tree = d3.layout.tree()
+	    .size([400, diameter / 2 - 80])
+	    .separation(function (a, b) { return (a.parent == b.parent ? 1 : 10) / a.depth; });
+	
+	var diagonal = d3.svg.diagonal.radial()
+	    .projection(function (d) { return [d.y, d.x / 180 * Math.PI]; });
+	
+	var svg = d3.select("body").append("svg")
+	    .attr("width", width)
+	    .attr("height", height)
+	    .append("g")
+	    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+	
+	root = pubs;
+	root.x0 = height / 2;
+	root.y0 = 0;
+	
+	//root.children.forEach(collapse); // start with all children collapsed
+	update(root);
+	
+	d3.select(self.frameElement).style("height", "800px");
+	
+	function update(source) {
+	
+	    // Compute the new tree layout.
+	    var nodes = tree.nodes(root),
+	        links = tree.links(nodes);
+	
+	    // Normalize for fixed-depth.
+	    nodes.forEach(function (d) { d.y = d.depth * 80; });
+	
+	    // Update the nodes…
+	    var node = svg.selectAll("g.node")
+	        .data(nodes, function (d) { return d.id || (d.id = ++i); });
+	
+	    // Enter any new nodes at the parent's previous position.
+	    var nodeEnter = node.enter().append("g")
+	        .attr("class", "node")
+	        //.attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+	        .on("click", click);
+	
+	    nodeEnter.append("circle")
+	        .attr("r", 1e-6)
+	        .style("fill", function (d) { return d._children ? "lightsteelblue" : "#fff"; });
+	
+	    nodeEnter.append("text")
+	        .attr("x", 10)
+	        .attr("dy", ".35em")
+	        .attr("text-anchor", "start")
+	        //.attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length * 8.5)  + ")"; })
+	        .text(function (d) { return d.name; })
+	        .style("fill-opacity", 1e-6);
+	
+	    // Transition nodes to their new position.
+	    var nodeUpdate = node.transition()
+	        .duration(duration)
+	        .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+	
+	    nodeUpdate.select("circle")
+	        .attr("r", 4.5)
+	        .style("fill", function (d) { return d._children ? "lightsteelblue" : "#fff"; });
+	
+	    nodeUpdate.select("text")
+	        .style("fill-opacity", 1)
+	        .attr("transform", function (d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length + 50) + ")"; });
+	
+	    // TODO: appropriate transform
+	    var nodeExit = node.exit().transition()
+	        .duration(duration)
+	        //.attr("transform", function(d) { return "diagonal(" + source.y + "," + source.x + ")"; })
+	        .remove();
+	
+	    nodeExit.select("circle")
+	        .attr("r", 1e-6);
+	
+	    nodeExit.select("text")
+	        .style("fill-opacity", 1e-6);
+	
+	    // Update the links…
+	    var link = svg.selectAll("path.link")
+	        .data(links, function (d) { return d.target.id; });
+	
+	    // Enter any new links at the parent's previous position.
+	    link.enter().insert("path", "g")
+	        .attr("class", "link")
+	        .attr("d", function (d) {
+	            var o = { x: source.x0, y: source.y0 };
+	            return diagonal({ source: o, target: o });
+	        });
+	
+	    // Transition links to their new position.
+	    link.transition()
+	        .duration(duration)
+	        .attr("d", diagonal);
+	
+	    // Transition exiting nodes to the parent's new position.
+	    link.exit().transition()
+	        .duration(duration)
+	        .attr("d", function (d) {
+	            var o = { x: source.x, y: source.y };
+	            return diagonal({ source: o, target: o });
+	        })
+	        .remove();
+	
+	    // Stash the old positions for transition.
+	    nodes.forEach(function (d) {
+	        d.x0 = d.x;
+	        d.y0 = d.y;
+	    });
+	}
+	
+	// Toggle children on click.
+	function click(d) {
+	    if (d.children) {
+	        d._children = d.children;
+	        d.children = null;
+	    } else {
+	        d.children = d._children;
+	        d._children = null;
+	    }
+	
+	    update(d);
+	}
+	
+	// Collapse nodes
+	function collapse(d) {
+	    if (d.children) {
+	        d._children = d.children;
+	        d._children.forEach(collapse);
+	        d.children = null;
+	    }
+	}
+	
+	
+	   
+	
+	                }
+	            )
+	
+	       // }
+	
+	    }
+	)
+</script>
+</body>
+</html>
