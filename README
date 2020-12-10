@@ -1,0 +1,4 @@
+Our website utilizes a webpage that directs you to 3 other linked pages which show WikiData information,
+Bio2RDF information and the Radial Tree Visualisation. To ensure that all pages can be loaded properly, please 
+download the folder "FinalWebsitePILS" provided on GitHub containing all files and source code, then simply open the file
+ "testweb.html" in order to access the webpage.
