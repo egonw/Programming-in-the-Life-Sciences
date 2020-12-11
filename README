@@ -1,4 +1,4 @@
 Our website utilizes a webpage that directs you to 4 other linked pages which show WikiData information,
 Bio2RDF information, Combined Queries Data and the Radial Tree Visualisation. To ensure that all pages can be loaded properly, please 
-download the zip folder "LifeScience Website" provided on GitHub containing all files and source code, then simply open the file
- "Finalweb.html" in order to access the webpage.
+download the zip folder "LifeScience Website.zip" provided on GitHub containing all files and source code, then extract it and simply open the file named
+ "Finalweb.html" within to access the entire webpage.
